@@ -12,11 +12,13 @@
   "devDependencies": {
     "@babel/core": "^7.11.0",
     "@babel/plugin-transform-runtime": "^7.11.0",
-    "parcel": "^1.12.4"
+    "parcel": "^1.12.4",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-typescript-paths": "^0.1.14"
   },
   "dependencies": {
     "@babel/runtime-corejs2": "^7.11.0",
-    "@colyseus/ecs": "^0.4.0-alpha.2",
+    "@colyseus/ecs": "^0.4.0-alpha.3",
     "colyseus.js": "^0.14.0-alpha.4"
   }
 }

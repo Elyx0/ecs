@@ -1,7 +1,17 @@
-import { System } from "@colyseus/ecs";
-import { Circle, Intersecting, CanvasContext } from "./shared/components/components";
+import {
+    CanvasContext,
+    Circle,
+    Intersecting,
+} from "@shared/components/components";
 
-function fillCircle(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number) {
+import { System } from "@colyseus/ecs";
+
+function fillCircle(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    radius: number
+) {
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2, false);
     ctx.fill();
@@ -9,7 +19,13 @@ function fillCircle(ctx: CanvasRenderingContext2D, x: number, y: number, radius:
     return this;
 }
 
-function drawLine(ctx: CanvasRenderingContext2D, a: number, b: number, c: number, d: number) {
+function drawLine(
+    ctx: CanvasRenderingContext2D,
+    a: number,
+    b: number,
+    c: number,
+    d: number
+) {
     ctx.beginPath(), ctx.moveTo(a, b), ctx.lineTo(c, d), ctx.stroke();
 }
 
@@ -18,7 +34,7 @@ export function getRendererSystem(ctx: CanvasRenderingContext2D) {
         static queries = {
             circles: { components: [Circle] },
             intersectingCircles: { components: [Intersecting] },
-            context: { components: [CanvasContext], mandatory: true }
+            context: { components: [CanvasContext], mandatory: true },
         };
 
         execute() {
@@ -50,9 +66,11 @@ export function getRendererSystem(ctx: CanvasRenderingContext2D) {
 
             let intersectingCircles = this.queries.intersectingCircles.results;
             for (let i = 0; i < intersectingCircles.length; i++) {
-                let intersect = intersectingCircles[i].getComponent(Intersecting);
+                let intersect = intersectingCircles[i].getComponent(
+                    Intersecting
+                );
 
-                if (!intersect)  {
+                if (!intersect) {
                     console.log("intersect component not found.");
                     continue;
                 }
@@ -63,16 +81,42 @@ export function getRendererSystem(ctx: CanvasRenderingContext2D) {
                     ctx.strokeStyle = "#ff9";
 
                     ctx.fillStyle = "rgba(255, 255,255, 0.2)";
-                    fillCircle(ctx, intersect.points[j + 0], intersect.points[j + 1], 8);
-                    fillCircle(ctx, intersect.points[j + 2], intersect.points[j + 3], 8);
+                    fillCircle(
+                        ctx,
+                        intersect.points[j + 0],
+                        intersect.points[j + 1],
+                        8
+                    );
+                    fillCircle(
+                        ctx,
+                        intersect.points[j + 2],
+                        intersect.points[j + 3],
+                        8
+                    );
 
                     ctx.fillStyle = "#fff";
-                    fillCircle(ctx, intersect.points[j + 0], intersect.points[j + 1], 3);
-                    fillCircle(ctx, intersect.points[j + 2], intersect.points[j + 3], 3);
+                    fillCircle(
+                        ctx,
+                        intersect.points[j + 0],
+                        intersect.points[j + 1],
+                        3
+                    );
+                    fillCircle(
+                        ctx,
+                        intersect.points[j + 2],
+                        intersect.points[j + 3],
+                        3
+                    );
 
-                    drawLine(ctx, intersect.points[j + 0], intersect.points[j + 1], intersect.points[j + 2], intersect.points[j + 3]);
+                    drawLine(
+                        ctx,
+                        intersect.points[j + 0],
+                        intersect.points[j + 1],
+                        intersect.points[j + 2],
+                        intersect.points[j + 3]
+                    );
                 }
             }
         }
-    }
+    };
 }

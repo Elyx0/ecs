@@ -1,11 +1,26 @@
+import {
+    CanvasContext,
+    Circle,
+    DemoSettings,
+    Intersecting,
+    Movement,
+    State,
+} from "@shared/components/components";
+import { TagComponent as ClientTagComponent, Not } from "ecsy";
 import { System, World } from "@colyseus/ecs";
 
 import { Client } from "colyseus.js";
-import { State, Circle, Intersecting, CanvasContext, Movement, DemoSettings } from "./shared/components/components";
 import { getRendererSystem } from "./systems";
 
 const client = new Client("ws://localhost:2567");
 
+// class Hover extends ClientTagComponent {}
+// class HoverSystem extends System {
+//     static queries = {
+//         entities: { components: [Circle] },
+//     };
+//     execute() {}
+// }
 
 document.addEventListener("DOMContentLoaded", async () => {
     const ctx = document.querySelector("canvas").getContext("2d");
@@ -19,6 +34,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         .registerComponent(Intersecting)
         .registerComponent(CanvasContext)
         .registerComponent(DemoSettings)
+        // .registerComponent(Hover)
+        // .registerSystem(HoverSystem)
         .registerSystem(rendererSystem);
 
     // connect to colyseus' room
@@ -32,5 +49,4 @@ document.addEventListener("DOMContentLoaded", async () => {
         world.execute(now - previousTime);
         previousTime = now;
     });
-
 });
